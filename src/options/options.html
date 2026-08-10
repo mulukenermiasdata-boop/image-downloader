@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Downloader — Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="page">
+    <header class="page-head">
+      <h1>Image Downloader</h1>
+      <p>Settings are saved as you change them.</p>
+    </header>
+
+    <section class="card">
+      <h2>Discovery</h2>
+      <div class="row">
+        <label class="row-label" for="minWidth">
+          <span>Minimum width</span>
+          <small>Images narrower than this are hidden.</small>
+        </label>
+        <div class="row-control">
+          <input type="number" id="minWidth" min="0" max="20000" step="10">
+          <span class="unit">px</span>
+        </div>
+      </div>
+      <div class="row">
+        <label class="row-label" for="minHeight">
+          <span>Minimum height</span>
+          <small>Images shorter than this are hidden.</small>
+        </label>
+        <div class="row-control">
+          <input type="number" id="minHeight" min="0" max="20000" step="10">
+          <span class="unit">px</span>
+        </div>
+      </div>
+      <div class="row">
+        <label class="row-label" for="hideTiny">
+          <span>Hide tiny images</span>
+          <small>Filters out tracking pixels, spacers and invisible images.</small>
+        </label>
+        <div class="row-control"><input type="checkbox" id="hideTiny"></div>
+      </div>
+      <div class="row">
+        <label class="row-label" for="groupDuplicates">
+          <span>Group duplicate images</span>
+          <small>Collapse the different sizes of one picture into a single card.</small>
+        </label>
+        <div class="row-control"><input type="checkbox" id="groupDuplicates"></div>
+      </div>
+      <div class="row">
+        <label class="row-label" for="preferHighestQuality">
+          <span>Prefer largest image</span>
+          <small>Download the highest-resolution version found in each group.</small>
+        </label>
+        <div class="row-control"><input type="checkbox" id="preferHighestQuality"></div>
+      </div>
+      <div class="row">
+        <label class="row-label" for="measureUnknown">
+          <span>Measure unknown sizes</span>
+          <small>Load visible images in the page to read their true dimensions.</small>
+        </label>
+        <div class="row-control"><input type="checkbox" id="measureUnknown"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Downloads</h2>
+      <div class="row">
+        <label class="row-label" for="format">
+          <span>Default download format</span>
+          <small>Keep originals unless you need a specific format.</small>
+        </label>
+        <div class="row-control">
+          <select id="format">
+            <option value="original">Original format</option>
+            <option value="jpg">JPG</option>
+            <option value="png">PNG</option>
+            <option value="webp">WebP</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <label class="row-label" for="jpgQuality">
+          <span>JPG / WebP quality</span>
+          <small>Only used when converting.</small>
+        </label>
+        <div class="row-control">
+          <input type="range" id="jpgQuality" min="10" max="100" step="1">
+          <output id="jpgQualityOut" class="unit">92</output>
+        </div>
+      </div>
+      <div class="row">
+        <label class="row-label" for="naming">
+          <span>Filename behaviour</span>
+          <small>Smart names are built from alt text, nearby titles and the page.</small>
+        </label>
+        <div class="row-control">
+          <select id="naming">
+            <option value="original">Original filenames</option>
+            <option value="smart">Smart filenames</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <label class="row-label" for="downloadFolder">
+          <span>Default download folder</span>
+          <small>A subfolder of your Downloads directory. Leave empty for none.</small>
+        </label>
+        <div class="row-control">
+          <input type="text" id="downloadFolder" placeholder="e.g. Images" spellcheck="false">
+        </div>
+      </div>
+      <div class="row">
+        <label class="row-label" for="folderPerPage">
+          <span>Folder per page</span>
+          <small>Put each batch in a folder named after the page title.</small>
+        </label>
+        <div class="row-control"><input type="checkbox" id="folderPerPage"></div>
+      </div>
+      <div class="row">
+        <label class="row-label" for="zip">
+          <span>Download as ZIP</span>
+          <small>Package the batch into a single archive, built on your machine.</small>
+        </label>
+        <div class="row-control"><input type="checkbox" id="zip"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Site access</h2>
+      <p class="explain">
+        By default Image Downloader can only read a page <strong>after you click its toolbar
+        icon</strong> (Chrome's <code>activeTab</code> permission). It asks for nothing at install
+        and never scans anything in the background.
+      </p>
+      <p class="explain">
+        Because that access ends when you navigate or switch tabs, the side panel offers a one-time
+        <strong>"Scan every page automatically"</strong> button. Accepting it grants access to all
+        sites so the panel keeps up as you browse, and so image data can be read to convert or zip
+        files. It is entirely optional and the extension works without it.
+      </p>
+      <p class="explain muted">
+        To undo it, right-click the toolbar icon and choose <strong>"This can read and change site
+        data"</strong>. Nothing is uploaded either way.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Privacy</h2>
+      <p class="explain">
+        Private by design — images never leave your browser. No account, no analytics, no backend,
+        no remote code. Page URLs, image URLs and image contents are never sent anywhere.
+      </p>
+    </section>
+
+    <div class="actions">
+      <button type="button" id="reset" class="secondary">Reset to defaults</button>
+      <span class="saved" id="saved" hidden>Saved</span>
+    </div>
+  </main>
+
+  <script src="../utils/constants.js"></script>
+  <script src="../utils/settings.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

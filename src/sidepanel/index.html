@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Downloader</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="app">
+    <header class="head">
+      <div class="titlebar">
+        <div class="brand">
+          <h1>Image Downloader</h1>
+          <p class="count" id="count">Finding images…</p>
+        </div>
+        <div class="icon-actions">
+          <button class="icon-btn" id="btn-pick" type="button" title="Pick images from the page" aria-pressed="false">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.25"/><circle cx="8" cy="8" r="1.6" class="fill"/><path d="M8 .8v2.2M8 13v2.2M.8 8h2.2M13 8h2.2"/></svg>
+          </button>
+          <button class="icon-btn" id="btn-rescan" type="button" title="Rescan page">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.6 6.4A5.8 5.8 0 1 0 13.9 10"/><path d="M13.9 2.6v3.9h-3.9"/></svg>
+          </button>
+          <button class="icon-btn" id="btn-settings" type="button" title="Settings">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.3"/><path d="M8 1.2v1.6M8 13.2v1.6M14.8 8h-1.6M2.8 8H1.2M12.8 3.2l-1.1 1.1M4.3 11.7l-1.1 1.1M12.8 12.8l-1.1-1.1M4.3 4.3 3.2 3.2"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="search">
+        <svg class="search-icon" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7.2" cy="7.2" r="4.6"/><path d="m10.6 10.6 3 3"/></svg>
+        <input id="search" type="search" placeholder="Search images…" autocomplete="off" spellcheck="false">
+      </div>
+
+      <div class="tabs" id="tabs" role="tablist">
+        <button class="tab is-active" data-cat="all" role="tab" type="button">All</button>
+        <button class="tab" data-cat="photo" role="tab" type="button">Photos</button>
+        <button class="tab" data-cat="graphic" role="tab" type="button">Graphics</button>
+        <button class="tab" data-cat="svg" role="tab" type="button">SVG</button>
+        <button class="tab" data-cat="gif" role="tab" type="button">GIF</button>
+      </div>
+
+      <div class="toolbar">
+        <button class="chip" id="btn-filters" type="button" aria-expanded="false">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M4.5 8h7M6.5 12h3"/></svg>
+          Filters
+          <span class="dot" id="filters-dot" hidden></span>
+        </button>
+        <label class="sort">
+          <select id="sort" aria-label="Sort images">
+            <option value="largest">Largest first</option>
+            <option value="smallest">Smallest first</option>
+            <option value="page">Page order</option>
+            <option value="filesize">File size</option>
+          </select>
+        </label>
+        <div class="spacer"></div>
+        <button class="link-btn" id="btn-select-all" type="button">Select all</button>
+        <button class="link-btn" id="btn-select-none" type="button">None</button>
+        <button class="link-btn" id="btn-invert" type="button">Invert</button>
+      </div>
+
+      <div class="filters" id="filters" hidden>
+        <div class="filter-grid">
+          <label class="field">
+            <span>Minimum width</span>
+            <input type="number" id="min-width" min="0" max="20000" step="10" inputmode="numeric">
+          </label>
+          <label class="field">
+            <span>Minimum height</span>
+            <input type="number" id="min-height" min="0" max="20000" step="10" inputmode="numeric">
+          </label>
+          <label class="field">
+            <span>Format</span>
+            <select id="filter-format">
+              <option value="">Any format</option>
+              <option value="jpg">JPG</option>
+              <option value="png">PNG</option>
+              <option value="webp">WebP</option>
+              <option value="avif">AVIF</option>
+              <option value="gif">GIF</option>
+              <option value="svg">SVG</option>
+              <option value="unknown">Unknown</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Orientation</span>
+            <select id="filter-orientation">
+              <option value="">Any</option>
+              <option value="landscape">Landscape</option>
+              <option value="portrait">Portrait</option>
+              <option value="square">Square</option>
+            </select>
+          </label>
+        </div>
+        <div class="switches">
+          <label class="switch"><input type="checkbox" id="opt-hide-tiny"><span>Hide tiny images</span></label>
+          <label class="switch"><input type="checkbox" id="opt-group"><span>Group duplicates</span></label>
+          <label class="switch"><input type="checkbox" id="opt-prefer"><span>Prefer highest quality</span></label>
+        </div>
+      </div>
+    </header>
+
+    <main class="body" id="body">
+      <div class="grid" id="grid" role="listbox" aria-multiselectable="true" aria-label="Images found on the page"></div>
+      <div class="sentinel" id="sentinel"></div>
+      <div class="state" id="state" hidden></div>
+    </main>
+
+    <footer class="foot">
+      <div class="foot-row">
+        <span class="sel-count" id="sel-count">No images selected</span>
+        <button class="link-btn" id="btn-dl-options" type="button" aria-expanded="false">Options</button>
+      </div>
+      <button class="primary" id="btn-download" type="button" disabled>Download All</button>
+      <div class="progress" id="progress" hidden>
+        <div class="progress-bar"><span id="progress-fill"></span></div>
+        <span class="progress-text" id="progress-text"></span>
+      </div>
+      <p class="privacy">Private by design — images never leave your browser.</p>
+    </footer>
+
+    <div class="sheet" id="dl-options" hidden>
+      <div class="sheet-inner">
+        <div class="sheet-head">
+          <strong>Download options</strong>
+          <button class="icon-btn small" id="btn-close-options" type="button" title="Close">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg>
+          </button>
+        </div>
+
+        <fieldset class="group">
+          <legend>Download</legend>
+          <div class="radios" id="dl-format">
+            <label><input type="radio" name="dlformat" value="original"><span>Original format</span></label>
+            <label><input type="radio" name="dlformat" value="jpg"><span>JPG</span></label>
+            <label><input type="radio" name="dlformat" value="png"><span>PNG</span></label>
+            <label><input type="radio" name="dlformat" value="webp"><span>WebP</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="group" id="quality-group">
+          <legend>Quality</legend>
+          <div class="quality">
+            <input type="range" id="dl-quality" min="10" max="100" step="1">
+            <output id="dl-quality-out">92</output>
+          </div>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>Naming</legend>
+          <div class="radios" id="dl-naming">
+            <label><input type="radio" name="dlnaming" value="original"><span>Original filenames</span></label>
+            <label><input type="radio" name="dlnaming" value="smart"><span>Smart filenames</span></label>
+          </div>
+        </fieldset>
+
+        <label class="switch"><input type="checkbox" id="dl-folder"><span>Put files in a folder named after the page</span></label>
+        <label class="switch"><input type="checkbox" id="dl-zip"><span>Download as ZIP</span></label>
+        <p class="note" id="dl-note"></p>
+      </div>
+    </div>
+
+    <div class="sheet" id="versions" hidden>
+      <div class="sheet-inner">
+        <div class="sheet-head">
+          <strong id="versions-title">Versions</strong>
+          <button class="icon-btn small" id="btn-close-versions" type="button" title="Close">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8M12 4l-8 8"/></svg>
+          </button>
+        </div>
+        <ul class="versions-list" id="versions-list"></ul>
+      </div>
+    </div>
+
+    <div class="scrim" id="scrim" hidden></div>
+    <div class="toast" id="toast" hidden></div>
+  </div>
+
+  <script src="../utils/constants.js"></script>
+  <script src="../utils/image-normalizer.js"></script>
+  <script src="../utils/duplicate-detector.js"></script>
+  <script src="../utils/filenames.js"></script>
+  <script src="../utils/settings.js"></script>
+  <script src="../utils/converter.js"></script>
+  <script src="../utils/zip.js"></script>
+  <script src="../utils/downloader.js"></script>
+  <script src="sidepanel.js"></script>
+</body>
+</html>

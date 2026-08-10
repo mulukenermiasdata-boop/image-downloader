@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>YouTube thumbnail 1280x720</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 1280px; height: 720px; overflow: hidden; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+      background: #0d0f16;
+      color: #fff;
+      position: relative;
+    }
+    .glow {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(900px 640px at 12% 108%, rgba(79,70,229,.55), transparent 62%),
+        radial-gradient(760px 520px at 92% -8%, rgba(251,191,36,.18), transparent 60%);
+    }
+    .frame { position: absolute; inset: 0; display: flex; align-items: center; gap: 40px; padding: 56px 60px; }
+
+    /* ---------- left: the hook ---------- */
+    .left { width: 640px; flex: none; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 12px;
+      margin-bottom: 26px;
+    }
+    .badge img { width: 46px; height: 46px; display: block; border-radius: 11px; }
+    .badge span {
+      font-size: 19px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase;
+      color: #c7c9d4;
+    }
+    h1 {
+      font-size: 104px; line-height: .92; font-weight: 900; letter-spacing: -.035em;
+      text-shadow: 0 6px 30px rgba(0,0,0,.45);
+    }
+    h1 .amber { color: #fbbf24; }
+    .sub {
+      margin-top: 26px; font-size: 27px; font-weight: 600; color: #aeb2c2; letter-spacing: -.01em;
+    }
+
+    /* ---------- right: the comparison ---------- */
+    .right { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .tile { position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,.5); }
+    .tile img { display: block; object-fit: cover; }
+
+    /* Square tiles so the pixel labels are honest. */
+    .small { width: 132px; }
+    .small img { width: 132px; height: 132px; filter: saturate(.85) brightness(.95); }
+    .small::after {
+      content: ""; position: absolute; inset: 0; background: rgba(13,15,22,.35);
+    }
+    .small .cross {
+      position: absolute; inset: 0; display: grid; place-items: center; z-index: 2;
+    }
+    .small .cross svg { width: 58px; height: 58px; stroke: #fb7185; stroke-width: 13; fill: none; stroke-linecap: round; filter: drop-shadow(0 3px 10px rgba(0,0,0,.85)); }
+
+    .big { width: 330px; border: 4px solid #fbbf24; }
+    .big img { width: 100%; height: 322px; }
+    .best {
+      position: absolute; top: 14px; left: 14px;
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #fbbf24; color: #3b2a05;
+      font-size: 19px; font-weight: 800; letter-spacing: .02em;
+      padding: 8px 13px; border-radius: 10px;
+    }
+    .label {
+      font-size: 25px; font-weight: 800; letter-spacing: -.01em;
+      font-variant-numeric: tabular-nums;
+    }
+    .label.dim { font-size: 24px; color: #cfd3e0; text-decoration: line-through; text-decoration-thickness: 3px; text-decoration-color: #fb7185; }
+    .arrow { color: #fbbf24; font-size: 34px; line-height: 1; font-weight: 900; }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="frame">
+    <div class="left">
+      <div class="badge">
+        <img src="/icons/icon128.png" alt="">
+        <span>Image Downloader</span>
+      </div>
+      <h1>STOP<br>SAVING<br><span class="amber">THUMBNAILS</span></h1>
+      <p class="sub">Chrome extension that grabs<br>the full-size original instead.</p>
+    </div>
+
+    <div class="right">
+      <div class="tile small">
+        <img src="/mock/img/mountain-lake-1600x1067.jpg" alt="">
+        <div class="cross">
+          <svg viewBox="0 0 100 100"><path d="M22 22 78 78M78 22 22 78"/></svg>
+        </div>
+      </div>
+      <div class="label dim">150 &times; 150</div>
+      <div class="arrow">&#9660;</div>
+      <div class="tile big">
+        <img src="/mock/img/mountain-lake-1600x1067.jpg" alt="">
+        <div class="best">&#9733; BEST</div>
+      </div>
+      <div class="label">2400 &times; 2400</div>
+    </div>
+  </div>
+</body>
+</html>

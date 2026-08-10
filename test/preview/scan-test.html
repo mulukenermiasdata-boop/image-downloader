@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Scanner test page</title>
+  <meta property="og:image" content="/mock/img/social-share-1200x630.jpg">
+  <link rel="preload" as="image" href="/mock/img/preloaded-hero-1920x800.jpg">
+  <style>
+    body { font: 14px system-ui; margin: 24px; max-width: 900px; }
+    img { max-width: 220px; height: auto; display: block; }
+    .bg-css { width: 300px; height: 200px; background-image: url("/mock/img/css-stylesheet-bg-1000x667.jpg"); background-size: cover; }
+    section { margin: 18px 0; padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+    h2 { font-size: 13px; margin: 0 0 8px; color: #666; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow: auto; font-size: 12px; }
+    .pass { color: #067647; } .fail { color: #b42318; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Scanner test page</h1>
+
+  <section><h2>1. plain img</h2>
+    <img src="/mock/img/plain-photo-900x600.jpg" alt="A plain photo">
+  </section>
+
+  <section><h2>2. responsive srcset</h2>
+    <img src="/mock/img/responsive-400x300.jpg" alt="Responsive sunset"
+         srcset="/mock/img/responsive-400x300.jpg 400w, /mock/img/responsive-800x600.jpg 800w, /mock/img/responsive-1600x1200.jpg 1600w"
+         sizes="220px">
+  </section>
+
+  <section><h2>3. picture element</h2>
+    <picture>
+      <source type="image/webp" srcset="/mock/img/picture-source-1200x800.webp 1x, /mock/img/picture-source-2400x1600.webp 2x">
+      <img src="/mock/img/picture-fallback-1200x800.jpg" alt="Picture element">
+    </picture>
+  </section>
+
+  <section><h2>4. lazy-loaded (placeholder + data-src)</h2>
+    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+         data-src="/mock/img/lazy-loaded-1400x933.jpg" alt="Lazy loaded photo">
+  </section>
+
+  <section><h2>5. thumbnail linking to the full-size original</h2>
+    <a href="/mock/img/gallery-shot-2400x1600.jpg">
+      <img src="/mock/img/gallery-shot-200x133.jpg" alt="Gallery thumbnail">
+    </a>
+  </section>
+
+  <section><h2>6. inline style background</h2>
+    <div style="width:280px;height:180px;background-image:url('/mock/img/inline-style-bg-800x520.jpg')"></div>
+  </section>
+
+  <section><h2>7. stylesheet background</h2>
+    <div class="bg-css"></div>
+  </section>
+
+  <section><h2>8. inline svg</h2>
+    <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <title>Inline chart</title>
+      <rect width="120" height="120" rx="12" fill="#2563eb"></rect>
+      <circle cx="60" cy="50" r="24" fill="#fff"></circle>
+    </svg>
+  </section>
+
+  <section><h2>9. video poster / input image / object</h2>
+    <video poster="/mock/img/video-poster-1280x720.jpg" width="240"></video>
+    <input type="image" src="/mock/img/input-image-120x40.png" alt="Submit">
+    <object type="image/svg+xml" data="/mock/img/object-diagram.svg" width="160" height="120"></object>
+  </section>
+
+  <section><h2>10. resizing proxy (next/image)</h2>
+    <img src="/_next/image?url=%2Fmock%2Fimg%2Fnext-original-2000x1333.jpg&amp;w=640&amp;q=75" alt="Behind a proxy">
+  </section>
+
+  <section><h2>11. tracking pixel</h2>
+    <img src="/mock/img/tracking-pixel-1x1.png" width="1" height="1" alt="">
+  </section>
+
+  <h2>Results</h2>
+  <pre id="out">running…</pre>
+
+  <script src="../../src/utils/constants.js"></script>
+  <script src="../../src/utils/image-normalizer.js"></script>
+  <script src="../../src/utils/duplicate-detector.js"></script>
+  <script src="../../src/content/scanner.js"></script>
+  <script src="scan-test.js"></script>
+</body>
+</html>

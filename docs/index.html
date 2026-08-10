@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Downloader — Chrome extension</title>
+  <meta name="description" content="Find every image on a page, group duplicate sizes, and download the highest-quality original. A Chrome extension that never sends your data anywhere.">
+  <link rel="icon" href="icon.png">
+  <style>
+    :root { color-scheme: light dark; --ink:#16181d; --dim:#6b7280; --bg:#fff; --line:rgba(127,127,127,.24); --accent:#4f46e5; --amber:#b45309; }
+    @media (prefers-color-scheme: dark) {
+      :root { --ink:#e9ebef; --dim:#9aa1ad; --bg:#14161a; --accent:#8ba4ff; --amber:#fbbf24; }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0 auto; padding: 56px 22px 80px; max-width: 720px; background: var(--bg); color: var(--ink);
+      font: 16px/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    header { display: flex; align-items: center; gap: 16px; margin-bottom: 26px; }
+    header img { width: 60px; height: 60px; border-radius: 14px; }
+    h1 { font-size: 30px; letter-spacing: -.022em; margin: 0; line-height: 1.15; }
+    .tag { color: var(--dim); margin: 4px 0 0; font-size: 15px; }
+    .lead { font-size: 18px; line-height: 1.55; margin: 0 0 26px; }
+    h2 { font-size: 18px; margin: 34px 0 10px; letter-spacing: -.01em; }
+    p, li { margin: 0 0 12px; }
+    ul { padding-left: 22px; }
+    pre {
+      background: rgba(127,127,127,.12); padding: 14px 16px; border-radius: 10px; overflow-x: auto;
+      font: 13.5px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; margin: 0 0 16px;
+    }
+    .cta { display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+           padding: 11px 20px; border-radius: 10px; font-weight: 600; margin: 6px 0 8px; }
+    .privacy { border-left: 3px solid var(--accent); padding: 12px 16px; margin: 26px 0;
+               background: rgba(79,70,229,.07); border-radius: 0 8px 8px 0; }
+    a { color: var(--accent); }
+    footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--dim); font-size: 14px; }
+    footer a { margin-right: 18px; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="icon.png" alt="">
+    <div>
+      <h1>Image Downloader</h1>
+      <p class="tag">Chrome extension</p>
+    </div>
+  </header>
+
+  <p class="lead">
+    Find every image on a page, group the different sizes of the same picture together, and
+    download the highest-quality original.
+  </p>
+
+  <a class="cta" href="CHROME_WEB_STORE_URL">Get it on the Chrome Web Store</a>
+  
+
+  <h2>Why it exists</h2>
+  <p>
+    Most image downloaders list every image tag on a page, so you end up saving the 150-pixel
+    thumbnail while the 2400-pixel original sits right there in the page source. Image Downloader
+    looks at every version a page offers and picks the best one.
+  </p>
+  <pre>product-200.jpg
+product-600.jpg
+product-1200.jpg
+product-2400.jpg     &lt;- one card: "4 versions found, 2400 x 2400"</pre>
+
+  <h2>What it finds</h2>
+  <ul>
+    <li>Ordinary images, responsive <code>srcset</code> and <code>&lt;picture&gt;</code> sources</li>
+    <li>Lazy-loaded images and CSS background images</li>
+    <li>Inline SVG, and the full-size original linked behind a thumbnail</li>
+    <li>Open Graph images, and images added after the page finished loading</li>
+    <li>JPG, PNG, WebP, AVIF, GIF and SVG</li>
+  </ul>
+
+  <div class="privacy">
+    <strong>Private by design.</strong> No account, no analytics, no servers, no remote code.
+    Page addresses, image addresses and image data are never transmitted anywhere. Conversion and
+    ZIP packaging run locally in your browser.
+    <br><a href="privacy-policy.html">Read the full privacy policy</a>
+  </div>
+
+  <h2>Permissions</h2>
+  <p>
+    Installing grants no access to your websites. The extension reads a page only after you click
+    its toolbar icon. If you want the side panel to keep up as you browse, it offers a one-time
+    optional button to grant access to all sites, which you can withdraw at any time by
+    right-clicking the extension icon.
+  </p>
+
+  <h2>Support</h2>
+  <p>
+    Found a bug, or an image the extension misses? Open an issue on the
+    <a href="https://github.com/mulukenermiasdata-boop/image-downloader/issues">GitHub repository</a>.
+  </p>
+
+  <footer>
+    <a href="privacy-policy.html">Privacy policy</a>
+    <a href="https://github.com/mulukenermiasdata-boop/image-downloader/issues">Support</a>
+    <a href="CHROME_WEB_STORE_URL">Chrome Web Store</a>
+  </footer>
+</body>
+</html>

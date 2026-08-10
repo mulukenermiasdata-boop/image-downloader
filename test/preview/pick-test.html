@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Pick Mode cleanup test</title>
+  <style>
+    body { font: 14px system-ui; margin: 24px; }
+    img { max-width: 200px; display: block; margin: 12px 0; }
+    pre { background: #f5f5f5; padding: 12px; border-radius: 8px; font-size: 12px; }
+    .pass { color: #067647; } .fail { color: #b42318; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Pick Mode cleanup test</h1>
+  <img src="/mock/img/pick-target-800x600.jpg" alt="Pick target">
+  <pre id="out">running…</pre>
+
+  <script>
+    // Minimal Chrome stub: just enough for the content script to boot, plus
+    // hooks so the test can drive messages and ports.
+    (function () {
+      const messageListeners = [];
+      const connectListeners = [];
+      window.chrome = {
+        runtime: {
+          id: 'pick-test',
+          lastError: undefined,
+          onMessage: { addListener: (fn) => messageListeners.push(fn) },
+          onConnect: { addListener: (fn) => connectListeners.push(fn) },
+          sendMessage: (_msg, cb) => { if (cb) setTimeout(cb, 0); },
+          getURL: (p) => p
+        }
+      };
+      window.__send = (message) => new Promise((resolve) => {
+        let answered = false;
+        for (const fn of messageListeners) {
+          const async = fn(message, {}, (response) => { answered = true; resolve(response); });
+          if (!async && !answered) { resolve(undefined); return; }
+        }
+        if (!answered) setTimeout(() => resolve(undefined), 50);
+      });
+      // Simulate the side panel opening its pick port, then dying.
+      window.__connectPickPort = () => {
+        const disconnectHandlers = [];
+        const port = { name: 'imgdl-pick', onDisconnect: { addListener: (fn) => disconnectHandlers.push(fn) }, onMessage: { addListener() {} }, disconnect() {} };
+        for (const fn of connectListeners) fn(port);
+        return { drop: () => disconnectHandlers.forEach((fn) => fn()) };
+      };
+    })();
+  </script>
+  <script src="../../src/utils/constants.js"></script>
+  <script src="../../src/utils/image-normalizer.js"></script>
+  <script src="../../src/content/scanner.js"></script>
+  <script src="../../src/content/picker.js"></script>
+  <script src="../../src/content/content-script.js"></script>
+  <script src="pick-test.js"></script>
+</body>
+</html>

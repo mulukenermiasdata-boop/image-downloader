@@ -1,0 +1,16 @@
+{
+  "name": "image-downloader",
+  "version": "2.0.0",
+  "description": "Chrome extension (MV3) that finds every image on a page, groups duplicate sizes, and downloads the highest-quality original.",
+  "private": true,
+  "scripts": {
+    "test": "node test/run-tests.mjs",
+    "icons": "node tools/make-icons.mjs",
+    "preview:build": "node tools/make-preview.mjs",
+    "preview": "node tools/make-preview.mjs && node tools/serve.mjs",
+    "package": "node tools/package.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

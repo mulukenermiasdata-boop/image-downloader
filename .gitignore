@@ -1,0 +1,13 @@
+# Build output — regenerate with `npm run package`
+dist/
+
+# Generated preview harness page — regenerate with `npm run preview:build`
+test/preview/index.html
+
+# Local tooling
+.claude/
+node_modules/
+
+# OS noise
+Thumbs.db
+.DS_Store

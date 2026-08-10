@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Store screenshot scene</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; width: 1280px; height: 800px; overflow: hidden; }
+    body { font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+
+    .scene { display: flex; width: 1280px; height: 800px; background: #fff; }
+
+    /* ---------- sample web page ---------- */
+    .page { flex: 1; min-width: 0; overflow: hidden; background: #fff; color: #14161a; }
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 34px; border-bottom: 1px solid #eceef1;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 650; letter-spacing: -.01em; font-size: 15px; }
+    .brand i {
+      width: 22px; height: 22px; border-radius: 6px; display: block;
+      background: #14161a;
+    }
+    .nav { display: flex; gap: 22px; font-size: 13.5px; color: #62676f; }
+    .nav b { color: #14161a; font-weight: 500; }
+
+    .hero { padding: 34px 34px 20px; }
+    .eyebrow { font-size: 11.5px; letter-spacing: .09em; text-transform: uppercase; color: #8b9098; margin: 0 0 10px; }
+    .hero h1 { margin: 0 0 8px; font-size: 34px; line-height: 1.12; letter-spacing: -.025em; font-weight: 660; }
+    .hero p { margin: 0; color: #62676f; font-size: 14.5px; max-width: 540px; }
+
+    .grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+      padding: 8px 34px 34px;
+    }
+    .grid figure { margin: 0; }
+    .grid img {
+      display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+      border-radius: 10px; background: #f6f7f9;
+    }
+    .grid figcaption { margin-top: 7px; font-size: 12px; color: #8b9098; }
+    .grid .tall img { aspect-ratio: 4 / 5; }
+
+    /* ---------- side panel ---------- */
+    .panel-wrap {
+      width: 404px; flex: none; height: 800px;
+      border-left: 1px solid #d8dade; background: #fff;
+    }
+    #panel { width: 100%; height: 100%; border: 0; display: block; }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <div class="page">
+      <div class="topbar">
+        <div class="brand"><i></i> Northlight Studio</div>
+        <div class="nav"><b>Gallery</b><span>Prints</span><span>Journal</span><span>About</span></div>
+      </div>
+
+      <div class="hero">
+        <p class="eyebrow">Collection 04</p>
+        <h1>Field notes from the coast</h1>
+        <p>Thirty-two frames shot over two weeks. Every image is available as a full-resolution print file.</p>
+      </div>
+
+      <div class="grid">
+        <figure><img src="/mock/img/golden-gate-bridge-fog-1024x683.jpg" alt="Bridge in fog"><figcaption>Bridge, fog</figcaption></figure>
+        <figure><img src="/mock/img/mountain-lake-1600x1067.jpg" alt="Mountain lake"><figcaption>Lake at sunrise</figcaption></figure>
+        <figure><img src="/mock/img/team-photo-1280x853.jpg" alt="Summit"><figcaption>The summit</figcaption></figure>
+        <figure><img src="/mock/img/product-600.jpg" alt="Studio still life"><figcaption>Still life, studio</figcaption></figure>
+        <figure><img src="/mock/img/screenshot-dashboard-1920x1080.png" alt="Long exposure"><figcaption>Long exposure</figcaption></figure>
+        <figure><img src="/mock/img/portrait-800x1200.jpg" alt="Portrait"><figcaption>Portrait, no. 12</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="panel-wrap">
+      <iframe id="panel" src="index.html" title="Image Downloader side panel"></iframe>
+    </div>
+  </div>
+
+  <script>
+    // The panel is the real thing. Strip only the preview harness chrome
+    // (grey backdrop, rounded corners, drop shadow) so it sits flush like a
+    // real Chrome side panel.
+    var frame = document.getElementById('panel');
+    frame.addEventListener('load', function () {
+      var doc = frame.contentDocument;
+      var style = doc.createElement('style');
+      style.textContent =
+        'body{padding:0!important;background:var(--bg)!important;display:block!important;}' +
+        '.app{width:100%!important;height:100vh!important;border-radius:0!important;box-shadow:none!important;}';
+      doc.head.appendChild(style);
+      doc.documentElement.style.overflow = 'hidden';
+
+      // Headless capture races native lazy-loading, so start every thumbnail
+      // immediately instead of waiting for the intersection observer.
+      setInterval(function () {
+        var imgs = doc.querySelectorAll('.card img');
+        for (var i = 0; i < imgs.length; i++) {
+          imgs[i].loading = 'eager';
+          imgs[i].decoding = 'sync';
+          if (!imgs[i].getAttribute('src') && imgs[i].dataset.src) {
+            imgs[i].src = imgs[i].dataset.src;
+          }
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>
