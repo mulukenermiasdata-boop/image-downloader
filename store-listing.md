@@ -193,6 +193,71 @@ toggles, sort order, output format, quality, filename style and download folder.
 browsing data is stored.
 ```
 
+### Test instructions / notes for reviewers
+
+```
+No account, login or test credentials are needed. The extension is fully
+functional immediately after installation.
+
+
+WHAT IT DOES
+
+Finds every image on the page you are viewing, groups the different sizes of the
+same picture into a single entry, and downloads the highest-resolution version.
+
+
+HOW TO TEST (about 60 seconds)
+
+1. Open any image-heavy page. A shopping category page or an image gallery works
+   well, for example https://commons.wikimedia.org/wiki/Main_Page
+2. Click the Image Downloader toolbar icon. A side panel opens on the right and
+   lists the images found. The side panel is the entire user interface.
+3. Cards labelled "N versions" are groups. Click that link to see every size the
+   page offers for that one picture, ranked, with the chosen one marked "Best".
+4. Click a card to select it, then press Download Selected. The file is saved
+   through chrome.downloads.
+5. Right-clicking any image on the page also offers Download image, Download best
+   quality, Download as JPG and Download as PNG.
+
+
+PERMISSIONS
+
+On installation the extension has NO access to any website. It reads a page only
+after you click its toolbar icon, using activeTab.
+
+Because activeTab is revoked when a tab navigates, the side panel offers an
+optional "Scan every page automatically" button. To see it: open the panel on one
+tab, then switch to a different tab you have not clicked the icon on. The button
+appears in the panel's empty state. It calls chrome.permissions.request for the
+optional host permissions declared in the manifest.
+
+That request is never made automatically, it is the only permission request in
+the entire codebase, and declining it leaves the extension fully functional. It
+can be withdrawn at any time by right-clicking the extension icon.
+
+Format conversion (Options > JPG/PNG/WebP) and ZIP download read image bytes and
+process them locally with the browser's own canvas and a bundled ZIP writer.
+
+
+NETWORK ACTIVITY
+
+The extension makes no requests to any server operated by the developer. It has
+no backend. The only network activity is fetching image URLs belonging to the
+page being viewed, in order to read their bytes for conversion, ZIP packaging, or
+to detect an image's real format so it can be saved with the correct file
+extension. This is visible in DevTools.
+
+
+CODE
+
+No remote code, no eval, no remotely hosted scripts and no third-party runtime
+libraries. Every file that executes is contained in the uploaded package. The
+extension declares a strict CSP of script-src 'self'.
+
+The full source for this version is public:
+https://github.com/mulukenermiasdata-boop/image-downloader
+```
+
 ### Remote code
 
 ```
