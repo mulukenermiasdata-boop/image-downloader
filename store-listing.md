@@ -32,9 +32,7 @@ re-approving permissions.)
 WHAT'S NEW IN 2.0
 
 Version 2 is a complete rebuild. The old right-click menu is still there, but the
-main interface is now a side panel that finds every image on a page, groups the
-different sizes of the same picture together, and downloads the highest-quality
-original.
+main interface is now a side panel that opens beside the page you are viewing.
 
 Nothing changes about what the extension can access until you choose otherwise.
 It still reads a page only when you click its icon. If you want the panel to keep
@@ -71,8 +69,7 @@ WHAT IT FINDS
 
 Ordinary images, responsive srcset and picture sources, lazy-loaded images, CSS
 background images, inline SVG, the full-size original linked behind a thumbnail, Open
-Graph images, and images added to the page after it finished loading. JPG, PNG, WebP,
-AVIF, GIF and SVG.
+Graph images, and images added to the page after it finished loading.
 
 
 FEATURES
@@ -106,10 +103,10 @@ is used for exactly three things:
    going blank every time you click something.
 2. Converting an image, or packaging a batch into a ZIP, which means reading the
    image data.
-3. Checking what an image really is by reading its first few bytes, which is how you
-   get a correctly named .avif file instead of something mislabelled .jpg.
+3. Checking what an image really is by reading its first few bytes, so files are
+   saved with the extension that matches their actual contents.
 
-It is entirely optional and the extension works fully without it. Pages are read only
+Declining it stops nothing from working. Pages are read only
 while the side panel is open. There is no background scanning and no content script
 running on sites you are not actively using.
 
