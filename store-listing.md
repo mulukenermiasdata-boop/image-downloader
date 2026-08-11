@@ -30,96 +30,55 @@ re-approving permissions.)
 
 ```
 WHAT'S NEW IN 2.0
-
-Version 2 is a complete rebuild. The old right-click menu is still there, but the
-main interface is now a side panel that opens beside the page you are viewing.
-
-Nothing changes about what the extension can access until you choose otherwise.
-It still reads a page only when you click its icon. If you want the panel to keep
-up as you browse, there is a one-time button inside it that asks for access to all
-sites. It is optional and the extension works fully without it.
-
-
-Image Downloader finds every image on a page, groups the different sizes of the same
-picture together, and downloads the highest-quality original.
-
-Most image downloaders dump every image tag into a list, so you end up saving the
-150-pixel thumbnail while the 2400-pixel original sits right there in the page source.
-This one looks at every version a page offers and picks the best one for you.
-
-
+Version 2 is a complete rebuild.
+The right-click menu is still available, but the main interface is now a side panel that opens beside the page you're viewing.
+By default, Image Downloader reads a page only after you click its toolbar icon. If you want the panel to continue working automatically as you switch tabs or follow links, you can optionally grant broader site access from inside the panel.
+Image Downloader finds images on a page, groups different versions of the same image together, and helps you download the highest-quality version available.
+Instead of showing every thumbnail and resized copy as a separate result, it identifies related versions and presents the best available image.
 HOW IT WORKS
-
-Click the toolbar icon and a side panel opens beside the page. It scans automatically
-and shows every image as a thumbnail grid with real dimensions, format and file size.
-Keep scrolling and clicking around; the panel stays open and keeps up with you.
-
-When a page serves the same picture at four sizes:
-
-    product-200.jpg
-    product-600.jpg
-    product-1200.jpg
-    product-2400.jpg
-
-you get one card that reads "4 versions found, 2400 x 2400" instead of four confusing
-entries. Press Download and you get product-2400.jpg.
-
-
+Click the toolbar icon and the side panel opens beside the current page.
+The page is scanned automatically, and detected images appear in a thumbnail grid with their dimensions, format, and file size.
+As a page loads more content, the panel can update with newly detected images. A manual Rescan option is also available.
+If a page provides the same picture at several resolutions, Image Downloader groups those versions into one result and identifies the largest available version.
 WHAT IT FINDS
-
-Ordinary images, responsive srcset and picture sources, lazy-loaded images, CSS
-background images, inline SVG, the full-size original linked behind a thumbnail, Open
-Graph images, and images added to the page after it finished loading.
-
-
+Image Downloader can detect standard page images, responsive images, lazy-loaded images, CSS background images, inline graphics, full-size images linked from thumbnails, social preview images, and images added dynamically after the page loads.
 FEATURES
 
-- Automatic duplicate grouping with best-version detection
-- Live grid that updates as a page loads more images, plus a manual Rescan
-- Search by filename, URL, domain or alt text
-- Filter by minimum width and height, format, orientation, and type
-- Sort by largest, smallest, file size or page order
-- Multi-select, select all, invert, and shift-click ranges
-- Pick Mode: click images directly on the page to select them
-- Right-click menu: download image, download best quality, download as JPG or PNG
-- Optional conversion to JPG, PNG or WebP, done locally on your own machine
-- Optional ZIP download for a whole batch, packaged in your browser
-- Smart filenames built from alt text and page context
-- Honest file extensions: if a .jpg address actually serves AVIF, you get a .avif file
-- Tracking pixels, spacers and tiny icons hidden by default
-- Light and dark mode
+* Automatic duplicate grouping and best-version detection
+* Live image grid with manual Rescan
+* Search by filename, URL, domain, or alt text
+* Filter by dimensions, format, orientation, and type
+* Sort by dimensions, file size, or page order
+* Multi-select, Select All, Invert Selection, and Shift-click ranges
+* Pick Mode for selecting images directly on the page
+* Right-click actions for downloading images and choosing the best available version
+* Optional local image conversion
+* Optional ZIP downloads for batches of images
+* Smart filenames generated from alt text and page context
+* File extensions matched to the image's actual contents
+* Tracking pixels, spacers, and very small icons hidden by default
+* Light and dark mode
 
-
+Image conversion and ZIP creation happen locally in your browser.
 PERMISSIONS, IN PLAIN ENGLISH
+Image Downloader requests no access to your websites when you install it.
+By default, it uses Chrome's temporary page-access permission, which allows it to read the current page only after you click the extension's toolbar icon.
+That temporary access can end when you navigate away or switch tabs.
+If you want the side panel to continue working automatically while you browse, you can choose "Scan every page automatically." This grants broader site access.
+That permission is used to:
 
-Installing asks for no access to your websites at all. Image Downloader reads a page
-only after you click its toolbar icon, using Chrome's activeTab permission.
+1. Keep the side panel working while you switch tabs and follow links.
+2. Read image data when you choose to convert images or package a batch into a ZIP.
+3. Verify an image's actual file type so downloaded files use the correct extension.
 
-That access ends whenever you navigate or switch tabs, so the panel offers a one-time
-"Scan every page automatically" button. Accepting it grants access to all sites, which
-is used for exactly three things:
-
-1. Keeping the side panel working as you switch tabs and follow links, instead of it
-   going blank every time you click something.
-2. Converting an image, or packaging a batch into a ZIP, which means reading the
-   image data.
-3. Checking what an image really is by reading its first few bytes, so files are
-   saved with the extension that matches their actual contents.
-
-Declining it stops nothing from working. Pages are read only
-while the side panel is open. There is no background scanning and no content script
-running on sites you are not actively using.
-
-To undo it, right-click the extension icon and choose "This can read and change site
-data".
-
-
+Granting this permission is optional. Without it, you can still open Image Downloader manually on a page and use its core scanning and downloading features.
+There is no background scanning of unrelated websites.
+You can revoke site access at any time from Chrome's extension permissions.
 PRIVACY
-
-Everything happens inside your browser. No account, no sign-in, no analytics, no
-tracking, no external servers, no remote code. Page addresses, image addresses and
-image data are never transmitted anywhere. Conversion and ZIP packaging run locally
-using your browser's own image support.
+Everything happens inside your browser.
+There is no account, sign-in, analytics, tracking, external server processing, or remote code.
+Page URLs, image URLs, and image data are not transmitted to an external service.
+Image conversion and ZIP packaging are performed locally in your browser.
 ```
 
 ---
